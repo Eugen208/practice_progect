@@ -1,0 +1,46 @@
+
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+use ieee.math_real.all;
+use STD.textio.all;
+
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity testbench1 is
+    generic(CLOCK_FREQ  : real := 100.0e6;
+            SAMPLE_FREQ : real := 20.0e6);
+end testbench1;
+
+architecture Behavioral of testbench1 is
+-- Constants
+    constant TCLK : time := 1000 ms / CLOCK_FREQ;
+    constant CLK_RATIO : natural := natural(CLOCK_FREQ/SAMPLE_FREQ);
+    constant PAUSE : time := 100 ns;
+   -- constant AUX_WIDTH : positive := AMP_WIDTH + PHASE_WIDTH;
+signal i_clk:std_logic;
+begin
+ CLK_proc : process
+    begin
+        i_clk <= '0';
+        wait for TCLK/2;
+        i_clk <= '1';
+        wait for TCLK/2;
+    end process ;
+ 
+ READ_proc : process
+ file in_file : text open READ_MODE is "in.txt";
+ variable fline : line;
+ begin
+ readline (in_file, fline);
+ end process;
+end architecture;
+
